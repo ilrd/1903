@@ -47,8 +47,8 @@ def lalala(message):
             doc_pred.append(random.choice(doc_pred1 + doc_pred2 + doc_pred3))
 
             while len(doc_pred) < 5:
-                if len(doc_pred)>=1:
-                    doc_pred.append(doc_pred[-1])
+                if len(doc_pred) >= 1:
+                    doc_pred.append(random.choice(doc_pred))
                 else:
                     doc_pred.append(["Не ", "знайдено"])
             # поиск лучших врачей по специализации
@@ -70,6 +70,12 @@ def lalala(message):
                     READ_DOCTOR = 0
             else:
                 doc_pred = searcher.search(text)
+                while len(doc_pred) < 5:
+                    if len(doc_pred) >= 1:
+                        doc_pred.append(random.choice(doc_pred))
+                    else:
+                        doc_pred.append(["Не ", "знайдено"])
+
                 bot.send_message(message.chat.id, DOC_FIND.format(text, doc_pred[0][0], doc_pred[0][1], doc_pred[1][0],
                                                                   doc_pred[1][1], doc_pred[2][0], doc_pred[2][1],
                                                                   doc_pred[3][0], doc_pred[3][1], doc_pred[4][0],
