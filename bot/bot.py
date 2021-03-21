@@ -36,15 +36,19 @@ def lalala(message):
             # нейронка работает тут
             model = predictor.Predictor()
             pred = model.predict(text)
-            doc_pred1 = searcher.search(pred[0])
-            doc_pred2 = searcher.search(pred[1])
-            doc_pred3 = searcher.search(pred[2])
-            doc_pred = []
-            doc_pred.append(random.choice(doc_pred1 + doc_pred2 + doc_pred3))
-            doc_pred.append(random.choice(doc_pred1 + doc_pred2 + doc_pred3))
-            doc_pred.append(random.choice(doc_pred1 + doc_pred2 + doc_pred3))
-            doc_pred.append(random.choice(doc_pred1 + doc_pred2 + doc_pred3))
-            doc_pred.append(random.choice(doc_pred1 + doc_pred2 + doc_pred3))
+            doc_pred = searcher.search(pred[0], pred[1], pred[2])
+            if len(doc_pred) < 5:
+                doc_pred += searcher.search(pred[0], pred[1])
+                if len(doc_pred) < 5:
+                    doc_pred += searcher.search(pred[0], pred[2])
+                    if len(doc_pred) < 5:
+                        doc_pred += searcher.search(pred[1], pred[2])
+                        if len(doc_pred) < 5:
+                            doc_pred += searcher.search(pred[0])
+                            if len(doc_pred) < 5:
+                                doc_pred += searcher.search(pred[1])
+                                if len(doc_pred) < 5:
+                                    doc_pred += searcher.search(pred[2])
 
             while len(doc_pred) < 5:
                 if len(doc_pred) >= 1:
