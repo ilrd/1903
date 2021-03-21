@@ -1,4 +1,5 @@
 import pandas as pd
+import numpy as np
 
 
 def find_doctor_by_specialties(specialties):
@@ -7,7 +8,8 @@ def find_doctor_by_specialties(specialties):
     isFirst = True
 
     for specialty in specialties:
-        temp_filt = specialty_df['name'].str.lower().str.contains(specialty.lower())
+        temp_filt = (specialty_df['name'].str.lower() == specialty.lower()) | (
+            specialty_df['name'].str.lower().str.contains(specialty.lower()))
         if isFirst:
             spec_ids = list(set(specialty_df.loc[temp_filt, 'id'].to_list()))
             filt_spec_ids = [False for _ in range(len(doc_spec))]
